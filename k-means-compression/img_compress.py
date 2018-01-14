@@ -25,12 +25,14 @@ def compress(img_path, n_clusters, n_jobs=-1, n_random=1000, debug=False):
     labels = kmeans.predict(img_vect)
     labels = labels.reshape(rows, cols)
 
-    print('Total time: %.2f' % (time.time() - start))
+    end = time.time()
+
     if debug:
+        print('Total time: %.2f' % (end - start))
         print('centers: ', kmeans.cluster_centers_)
         print('labels: ', labels)
 
     np.save('cmprs_cntrs.npy', kmeans.cluster_centers_)
     imsave('cmprs_lbls.png', labels)
 
-    return 'cmprs_cntrs.npy', 'cmprs_lbls.png'
+    return 'cmprs_cntrs.npy', 'cmprs_lbls.png', end - start
